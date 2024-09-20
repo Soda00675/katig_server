@@ -1,5 +1,7 @@
 FROM node:20-alpine
 
+EXPOSE 3000
+
 WORKDIR /app
 
 RUN if [ -d "node_modules" ]; then rm -rf node_modules; fi
@@ -11,7 +13,5 @@ RUN npm install
 COPY . .
 
 RUN npm run build
-
-EXPOSE 3000
 
 CMD ["npm", "run", "start:nodemon"]

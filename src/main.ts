@@ -10,8 +10,6 @@ import { GlobalExceptionFilter } from '@/filters';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  console.log('DATABASE_URL', process.env.DATABASE_URL);
-
   /**
    * Global configuration
    */
@@ -53,6 +51,6 @@ async function bootstrap() {
   /**
    * Run the application
    */
-  await app.listen(process.env.APP_PORT);
+  await app.listen(process.env.APP_PORT, '0.0.0.0');
 }
 bootstrap();
