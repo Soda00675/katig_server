@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  katig-api:
+    build: .
+    container_name: katig-api
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - '${APP_PORT}:3000'
+    command: npm run start:dev
+    depends_on:
+      - katig-postgres
+    environment:
+      - DATABASE_HOST=${DATABASE_HOST}
+      - DATABASE_PORT=${DATABASE_PORT}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DATABASE_NAME=${DATABASE_NAME}
+    networks:
+      - katig-network
+
+  katig-postgres:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    ports:
+      - '${DATABASE_PORT}:5432'
+    volumes:
+      - ./db-data:/var/lib/postgresql/data
+    networks:
+      - katig-network
+
+networks:
+  katig-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
