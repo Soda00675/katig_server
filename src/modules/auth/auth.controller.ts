@@ -15,7 +15,7 @@ export class AuthController {
     description: 'Authenticate user credentials success',
   })
   @Post('/login')
-  async signinHandler(@Body() paylaod: Record<string, any>) {
-    return this.authService.authenticate(paylaod.username, paylaod.password);
+  async signinHandler(@Body() payload: Record<string, any>) {
+    return this.authService.authenticate(payload.username, payload.password);
   }
 }

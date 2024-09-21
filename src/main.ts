@@ -1,4 +1,5 @@
 import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app/app.module';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -8,7 +9,7 @@ import * as compression from 'compression';
 import { GlobalExceptionFilter } from '@/filters';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   /**
    * Global configuration
@@ -53,4 +54,5 @@ async function bootstrap() {
    */
   await app.listen(process.env.APP_PORT, '0.0.0.0');
 }
+
 bootstrap();
