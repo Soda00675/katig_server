@@ -4,7 +4,7 @@
 /build
 
 # Docker volumes
-/db_data
+/db-data
 
 # Logs
 logs
