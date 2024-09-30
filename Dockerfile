@@ -6,6 +6,8 @@ WORKDIR /app
 
 RUN if [ -d "node_modules" ]; then rm -rf node_modules; fi
 
+RUN if [ -d "dist" ]; then rm -rf dist; fi
+
 COPY package*.json ./
 
 RUN npm install

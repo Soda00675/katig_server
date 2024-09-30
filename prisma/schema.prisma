@@ -14,8 +14,24 @@ datasource db {
 }
 
 model UserRole {
+  // HasMany Users
   id        Int      @id @default(autoincrement())
   name      String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  users     User[]
+}
+
+model User {
+  // BelongsTo UserRole
+  id           Int       @id @default(autoincrement())
+  userRoleId   Int?
+  firstName    String
+  lastName     String
+  email        String    @unique
+  password     String
+  lastSigninAt DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  userRole     UserRole? @relation(references: [id], fields: [userRoleId], onDelete: SetNull)
 }

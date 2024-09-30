@@ -3,11 +3,10 @@ import { JwtModule } from '@nestjs/jwt';
 import { JWT_CONSTANTS } from './auth.constants';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { UsersModule } from '@/modules/users/users.module';
+import { UsersService } from '@/modules/users/users.service';
 
 @Module({
   imports: [
-    UsersModule,
     JwtModule.register({
       global: true,
       secret: JWT_CONSTANTS.secret,
@@ -16,7 +15,7 @@ import { UsersModule } from '@/modules/users/users.module';
       },
     }),
   ],
-  providers: [AuthService],
+  providers: [AuthService, UsersService],
   controllers: [AuthController],
 })
 export class AuthModule {}

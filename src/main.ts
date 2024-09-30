@@ -41,18 +41,17 @@ async function bootstrap() {
       'Export API documentation as json file',
       'docs/api/download',
     )
-    .addTag('Auth API', 'Auth account management')
     .build();
   const swaggerDocument = SwaggerModule.createDocument(app, swaggerConfig);
 
   SwaggerModule.setup('docs/api', app, swaggerDocument, {
-    customSiteTitle: 'CUL Transport API Swagger Documentation',
+    customSiteTitle: 'API Swagger Documentation',
   });
 
   /**
    * Run the application
    */
-  await app.listen(process.env.APP_PORT, '0.0.0.0');
+  await app.listen(3000, '0.0.0.0');
 }
 
 bootstrap();
