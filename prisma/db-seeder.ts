@@ -5,35 +5,56 @@ const prisma = new PrismaClient();
 
 async function populateDatabase() {
   const password = await argon2.hash('password');
-  const roles = ['admin'];
 
-  Promise.all(
-    roles.map((role) =>
-      prisma.userRole.create({
-        data: {
-          name: role,
-        },
-      }),
-    ),
-  );
+  await prisma.userRole.create({
+    data: {
+      name: 'admin',
+    },
+  });
+  await prisma.userRole.create({
+    data: {
+      name: 'boat-operator',
+    },
+  });
+  await prisma.userRole.create({
+    data: {
+      name: 'customer',
+    },
+  });
 
-  Promise.all(
-    roles.map((role) =>
-      prisma.user.create({
-        data: {
-          firstName: role,
-          lastName: 'account',
-          email: `${role}@domain.com`,
-          password,
-        },
-      }),
-    ),
-  );
+  await prisma.user.create({
+    data: {
+      firstName: 'admin',
+      lastName: 'account',
+      email: `admin@domain.com`,
+      password,
+      userRoleId: 1,
+    },
+  });
+
+  await prisma.user.create({
+    data: {
+      firstName: 'boat-operator',
+      lastName: 'account',
+      email: `boat-operator@domain.com`,
+      password,
+      userRoleId: 2,
+    },
+  });
+
+  await prisma.user.create({
+    data: {
+      firstName: 'customer',
+      lastName: 'account',
+      email: `customer@domain.com`,
+      password,
+      userRoleId: 3,
+    },
+  });
 }
 
 async function seed() {
   await populateDatabase();
-  // clearDatabase();
 }
 
 seed()

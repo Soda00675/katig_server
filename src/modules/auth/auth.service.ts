@@ -2,8 +2,6 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '@/modules/users/users.service';
 
-export type User = any;
-
 @Injectable()
 export class AuthService {
   constructor(
