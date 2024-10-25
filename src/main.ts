@@ -51,7 +51,9 @@ async function bootstrap() {
   /**
    * Run the application
    */
-  await app.listen(3000);
+  await app.listen(process.env.APP_PORT).then(() => {
+    console.info('[APP]: Running in http://localhost:' + process.env.APP_PORT);
+  });
 }
 
 bootstrap();
