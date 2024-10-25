@@ -51,7 +51,7 @@ async function bootstrap() {
   /**
    * Run the application
    */
-  await app.listen(3000, '0.0.0.0');
+  await app.listen(3000);
 }
 
 bootstrap();
