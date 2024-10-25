@@ -25,6 +25,7 @@
     "seed": "ts-node ./prisma/db-seeder.ts"
   },
   "dependencies": {
+    "@nestjs-modules/mailer": "^2.0.2",
     "@nestjs/common": "^10.0.0",
     "@nestjs/core": "^10.0.0",
     "@nestjs/jwt": "^10.2.0",
@@ -36,6 +37,7 @@
     "class-validator": "^0.14.1",
     "compression": "^1.7.4",
     "helmet": "^7.1.0",
+    "nodemailer": "^6.9.15",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1"
   },

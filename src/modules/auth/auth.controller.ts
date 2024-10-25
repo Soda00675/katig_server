@@ -12,18 +12,20 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @ApiResponse({
-    status: 200,
+    status: HttpStatus.OK,
     description: 'Authenticate user credentials success',
   })
+  @HttpCode(HttpStatus.OK)
   @Post('/sign-in')
   async signinHandler(@Body() payload: LoginDTO) {
     return this.authService.authenticate(payload);
   }
 
   @ApiResponse({
-    status: 200,
+    status: HttpStatus.CREATED,
     description: 'Register user account',
   })
+  @HttpCode(HttpStatus.CREATED)
   @Post('/sign-up')
   async signupHandler(@Body() payload: RegisterAccountDTO) {
     return this.authService.registerAccount(payload);
