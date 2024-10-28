@@ -2,7 +2,7 @@ import * as argon2 from 'argon2';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '@/modules/users/users.service';
-import { LoginCredentials } from './auth.dto';
+import { RegisterAccount, LoginCredentials } from './auth.dto';
 import { User } from '@prisma/client';
 
 type VerifyPassword = {
@@ -52,13 +52,11 @@ export class AuthService {
     };
   }
 
-  async registerAccount(data: User) {
+  async registerAccount(data: RegisterAccount) {
     data.password = await this.hashPassword(data.password);
 
-    const createdAccount = await this.usersService.create({
-      ...data,
-      userRoleId: 3, // Default to customer account
-    });
+    // @ts-ignore
+    const createdAccount = await this.usersService.create({ ...data });
 
     return createdAccount;
   }
