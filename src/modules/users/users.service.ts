@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '@/prisma.service';
-import { RegisterAccount } from '@/modules/auth/auth.dto';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
@@ -31,7 +31,7 @@ export class UsersService {
     });
   }
 
-  async create(data: RegisterAccount & { userRoleId: number }) {
+  async create(data: User) {
     const checkUserExists = await this.findByEmail(data.email);
 
     if (checkUserExists) {
