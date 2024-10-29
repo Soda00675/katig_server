@@ -25,9 +25,6 @@ export class UsersService {
       data: {
         ...data,
       },
-      include: {
-        userRole: true,
-      },
     });
 
     delete user.password;
