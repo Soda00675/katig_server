@@ -56,7 +56,12 @@ export class AuthService {
     data.password = await this.hashPassword(data.password);
 
     // @ts-ignore
-    const createdAccount = await this.usersService.create({ ...data });
+    const createdAccount = await this.usersService.create({
+      ...data,
+      userRole: {
+        connect: { id: 3 }, // Connect the user to a default role
+      },
+    });
 
     return createdAccount;
   }

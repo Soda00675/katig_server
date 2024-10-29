@@ -14,7 +14,7 @@ export class UsersService {
     });
   }
 
-  async create(data: User) {
+  async create(data: any) {
     const checkUserExists = await this.findByEmail(data.email);
 
     if (checkUserExists) {
