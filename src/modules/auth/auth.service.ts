@@ -59,7 +59,7 @@ export class AuthService {
     const createdAccount = await this.usersService.create({
       ...data,
       userRole: {
-        connect: { id: 3 }, // Connect the user to a default role
+        connect: { id: 3 },
       },
     });
 

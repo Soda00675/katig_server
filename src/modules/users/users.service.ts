@@ -2,6 +2,12 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '@/prisma.service';
 import { User } from '@prisma/client';
 
+type ExtendedUserCreate = User & {
+  userRole?: {
+    connect: { id: number };
+  };
+};
+
 @Injectable()
 export class UsersService {
   constructor(private readonly prismaService: PrismaService) {}
@@ -14,7 +20,7 @@ export class UsersService {
     });
   }
 
-  async create(data: any) {
+  async create(data: ExtendedUserCreate) {
     const checkUserExists = await this.findByEmail(data.email);
 
     if (checkUserExists) {
@@ -23,7 +29,10 @@ export class UsersService {
 
     const user = await this.prismaService.user.create({
       data: {
-        ...data,
+        ...(data as User),
+      },
+      include: {
+        userRole: true,
       },
     });
 
