@@ -1,4 +1,11 @@
-import { Controller, Body, Post, HttpStatus, HttpCode } from '@nestjs/common';
+import {
+  Controller,
+  Body,
+  Post,
+  Get,
+  HttpStatus,
+  HttpCode,
+} from '@nestjs/common';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { UserRolesService } from './user-roles.service';
 import { UserRoleDTO } from './user-roles.dto';
@@ -14,10 +21,18 @@ export class UserRolesController {
 
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'Authenticate user credentials success',
   })
   @HttpCode(HttpStatus.OK)
-  @Post('/sign-in')
+  @Get('/')
+  async getAllHandler() {
+    return this.userRolesService.getAll();
+  }
+
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+  })
+  @HttpCode(HttpStatus.OK)
+  @Post('/')
   async createHandler(@Body() payload: UserRoleDTO) {
     return this.userRolesService.create(payload as UserRole);
   }

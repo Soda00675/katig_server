@@ -6,6 +6,14 @@ import { PrismaService } from '@/prisma.service';
 export class UserRolesService {
   constructor(private readonly prismaService: PrismaService) {}
 
+  public async getAll() {
+    return await this.prismaService.userRole.findMany({
+      orderBy: {
+        id: 'desc',
+      },
+    });
+  }
+
   public async create(data: UserRole) {
     return await this.prismaService.userRole.create({
       data,
