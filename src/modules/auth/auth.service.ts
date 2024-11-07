@@ -26,9 +26,11 @@ export class AuthService {
   }
 
   private async checkAuthUser(user: User, passwords: VerifyPassword) {
-    if (!user || (await this.verifyPassword(passwords))) {
+    if (!user || !(await this.verifyPassword(passwords))) {
       return false;
     }
+
+    return true;
   }
 
   async authenticate(credentials: LoginCredentials) {

@@ -24,14 +24,33 @@ model UserRole {
 
 model User {
   // BelongsTo UserRole
-  id           Int       @id @default(autoincrement())
-  userRoleId   Int
-  fullname     String
-  username     String    @unique
-  email        String    @unique
-  password     String
-  lastSigninAt DateTime?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  userRole     UserRole  @relation(references: [id], fields: [userRoleId], onDelete: Cascade)
+  id         Int      @id @default(autoincrement())
+  userRoleId Int
+  contact    String?
+  fullname   String
+  username   String   @unique
+  email      String   @unique
+  password   String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  userRole   UserRole @relation(references: [id], fields: [userRoleId], onDelete: Cascade)
+  boats      Boat[]
+}
+
+model EmergencyHotlines {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Boat {
+  id           Int      @id @default(autoincrement())
+  ownerId      Int
+  name         String   @unique
+  operatorName String
+  type         String
+  status       String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  owner        User     @relation(references: [id], fields: [ownerId], onDelete: Cascade)
 }

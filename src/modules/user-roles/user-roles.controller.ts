@@ -1,8 +1,11 @@
 import {
   Controller,
   Body,
+  Param,
   Post,
   Get,
+  Patch,
+  Delete,
   HttpStatus,
   HttpCode,
 } from '@nestjs/common';
@@ -29,11 +32,41 @@ export class UserRolesController {
   }
 
   @ApiResponse({
+    status: HttpStatus.OK,
+  })
+  @HttpCode(HttpStatus.OK)
+  @Get('/:id')
+  async getByIdHandler(@Param('id') id: number) {
+    return this.userRolesService.get(+id);
+  }
+
+  @ApiResponse({
     status: HttpStatus.CREATED,
   })
   @HttpCode(HttpStatus.OK)
   @Post('/')
   async createHandler(@Body() payload: UserRoleDTO) {
     return this.userRolesService.create(payload as UserRole);
+  }
+
+  @ApiResponse({
+    status: HttpStatus.OK,
+  })
+  @HttpCode(HttpStatus.OK)
+  @Patch('/:id')
+  async updateByIdHandler(
+    @Param('id') id: number,
+    @Body() payload: UserRoleDTO,
+  ) {
+    return this.userRolesService.update(+id, payload as UserRole);
+  }
+
+  @ApiResponse({
+    status: HttpStatus.OK,
+  })
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Delete('/:id')
+  async deleteByIdHandler(@Param('id') id: number) {
+    return this.userRolesService.destroy(+id);
   }
 }
