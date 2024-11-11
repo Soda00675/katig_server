@@ -26,9 +26,8 @@ export class AuthService {
   }
 
   private async checkAuthUser(user: User, passwords: VerifyPassword) {
-    if (!user || !(await this.verifyPassword(passwords))) {
-      return false;
-    }
+    if (!user) return false
+    if (!(await this.verifyPassword(passwords))) return false;
 
     return true;
   }
@@ -37,7 +36,7 @@ export class AuthService {
     const user = await this.usersService.findByEmail(credentials.email);
     const isCredentialsValid = await this.checkAuthUser(user, {
       raw: credentials.password,
-      hashed: user.password,
+      hashed: user?.password || '',
     });
 
     if (!isCredentialsValid) {
