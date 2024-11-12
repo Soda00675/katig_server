@@ -26,7 +26,7 @@ export class AuthService {
   }
 
   private async checkAuthUser(user: User, passwords: VerifyPassword) {
-    if (!user) return false
+    if (!user) return false;
     if (!(await this.verifyPassword(passwords))) return false;
 
     return true;
