@@ -12,7 +12,7 @@ export class PaymentsService {
 
   private get paymongo() {
     const paymongoInstance = require('paymongo-node')(
-      this.configService.get<string>('APP_PAYMONGO_PRIVATE'),
+      this.configService.get<string>('PAYMONGO_PRIVATE_KEY'),
     );
 
     return paymongoInstance;

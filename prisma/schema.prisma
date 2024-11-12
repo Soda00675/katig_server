@@ -14,27 +14,26 @@ datasource db {
 }
 
 model UserRole {
-  // HasMany Users
   id        Int      @id @default(autoincrement())
   name      String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  users     User[]
+  users     User[] // HasMany Users
 }
 
 model User {
-  // BelongsTo UserRole
-  id         Int      @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   userRoleId Int
   contact    String?
   fullname   String
-  username   String   @unique
-  email      String   @unique
+  username   String    @unique
+  email      String    @unique
   password   String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  userRole   UserRole @relation(references: [id], fields: [userRoleId], onDelete: Cascade)
-  boats      Boat[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  userRole   UserRole  @relation(references: [id], fields: [userRoleId], onDelete: Cascade) // BelongsTo UserRole
+  boats      Boat[] // HasMany Boats
+  payments   Payment[] // HasMany Payments
 }
 
 model EmergencyHotlines {
@@ -52,5 +51,13 @@ model Boat {
   status       String
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-  owner        User     @relation(references: [id], fields: [ownerId], onDelete: Cascade)
+  owner        User     @relation(references: [id], fields: [ownerId], onDelete: Cascade) // BelongsTo User (as owner)
+}
+
+model Payment {
+  id        Int      @id @default(autoincrement())
+  payerId   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  payer     User     @relation(references: [id], fields: [payerId], onDelete: Cascade) // BelongsTo User (as payer)
 }
