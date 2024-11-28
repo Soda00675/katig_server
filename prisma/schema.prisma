@@ -36,8 +36,21 @@ model User {
   payments   Payment[] // HasMany Payments
 }
 
-model EmergencyHotlines {
+model EmergencyHotline {
   id        Int      @id @default(autoincrement())
+  logo      String
+  name      String
+  contactNo String
+  status    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model EmergencyTip {
+  id        Int      @id @default(autoincrement())
+  logo      String
+  name      String
+  content   String   @db.Text
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -47,11 +60,19 @@ model Boat {
   ownerId      Int
   name         String   @unique
   operatorName String
+  capacity     Int
   type         String
   status       String
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   owner        User     @relation(references: [id], fields: [ownerId], onDelete: Cascade) // BelongsTo User (as owner)
+}
+
+model BoatBooking {
+  id        Int      @id @default(autoincrement())
+  bookingNo String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Payment {
