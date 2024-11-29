@@ -69,10 +69,17 @@ model Boat {
 }
 
 model BoatBooking {
-  id        Int      @id @default(autoincrement())
-  bookingNo String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                 Int      @id @default(autoincrement())
+  bookingNo          String   @unique
+  boatId             Int
+  primaryPassengerId Int
+  boatType           String
+  destinationFrom    String
+  destinationTo      String
+  departureDate      String
+  passengersSet      Json
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 }
 
 model Payment {
