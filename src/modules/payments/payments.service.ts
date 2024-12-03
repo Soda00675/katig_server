@@ -1,24 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { PaymentsService as PaymongoPaymentsService } from '@/payments.service';
+import {
+  PaymongoService,
+  type CreatePaymentLinkPayload,
+} from '@/paymongo.service';
 
 @Injectable()
 export class PaymentsService {
-  constructor(
-    private readonly paymongoPaymentsService: PaymongoPaymentsService,
-  ) {}
+  constructor(private readonly paymongoService: PaymongoService) {}
 
-  async getList() {
-    //
-  }
-
-  async create() {
-    const payment = await this.paymongoPaymentsService.createPaymentLink({
-      amount: 500,
-      description: '',
+  async createPayment(payload: CreatePaymentLinkPayload) {
+    const paymongoPayment = await this.paymongoService.createPaymentLink({
+      amount: Number('75000'),
+      description: '[BOAT-TICKET] BYD > MNGPNG (Ticket(s) payment)',
     });
-  }
 
-  async get() {
-    //
+    return paymongoPayment;
   }
 }

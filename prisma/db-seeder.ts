@@ -26,7 +26,7 @@ async function populateDatabase() {
     data: {
       fullname: 'admin',
       username: 'admin',
-      email: `admin@domain.com`,
+      email: `admin@gmail.com`,
       password,
       userRoleId: 1,
     },
@@ -36,7 +36,7 @@ async function populateDatabase() {
     data: {
       fullname: 'boat-operator',
       username: 'boat-operator',
-      email: `boat-operator@domain.com`,
+      email: `boat-operator@gmail.com`,
       password,
       userRoleId: 2,
     },
@@ -44,10 +44,20 @@ async function populateDatabase() {
 
   await prisma.user.create({
     data: {
-      fullname: 'customer',
-      username: 'customer',
-      email: `customer@domain.com`,
-      password,
+      fullname: 'Katig User',
+      username: 'katig_user',
+      email: 'katig_user@gmail.com',
+      password: 'katig_userpass',
+      userRoleId: 3,
+    },
+  });
+
+  await prisma.user.create({
+    data: {
+      fullname: 'Katig User2',
+      username: 'katig_user2',
+      email: 'katig_user2@gmail.com',
+      password: 'katig_userpass2',
       userRoleId: 3,
     },
   });

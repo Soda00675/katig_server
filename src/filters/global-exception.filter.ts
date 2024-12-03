@@ -19,18 +19,24 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     const status = this.getExceptionStatus(exception);
 
     const getErrorMessage = (error: any) => {
+      console.log(error);
+
       if (Object.hasOwn(error, 'response')) {
         return error.response.message;
       }
 
-      return error.message;
+      if (Object.hasOwn(error, 'message')) {
+        return error.message;
+      }
+
+      return error;
     };
 
-    response.status(status).json({
+    return response.status(status).json({
       statusCode: status,
       timestamp: new Date().toISOString(),
       path: request.url,
-      message: getErrorMessage(exception) || 'INTERNAL_SERVER_ERROR',
+      message: getErrorMessage(exception),
     });
   }
 }

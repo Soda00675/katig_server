@@ -56,16 +56,18 @@ model EmergencyTip {
 }
 
 model Boat {
-  id           Int      @id @default(autoincrement())
-  ownerId      Int
-  name         String   @unique
-  operatorName String
-  capacity     Int
-  type         String
-  status       String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  owner        User     @relation(references: [id], fields: [ownerId], onDelete: Cascade) // BelongsTo User (as owner)
+  id            Int            @id @default(autoincrement())
+  ownerId       Int
+  name          String         @unique
+  operatorName  String
+  capacity      Int
+  type          String
+  status        String
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  owner         User           @relation(references: [id], fields: [ownerId], onDelete: Cascade) // BelongsTo User (as owner)
+  boatSchedules BoatSchedule[] // HasMany BoatSchedules
+  boatBookings  BoatBooking[]
 }
 
 model BoatBooking {
@@ -80,6 +82,18 @@ model BoatBooking {
   passengersSet      Json
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
+  boat               Boat     @relation(references: [id], fields: [boatId], onDelete: Cascade) // BelongsTo Boat
+}
+
+model BoatSchedule {
+  id        Int      @id @default(autoincrement())
+  boatId    Int
+  from      String
+  to        String
+  price     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  boat      Boat     @relation(references: [id], fields: [boatId], onDelete: Cascade) // BelongsTo Boat
 }
 
 model Payment {
