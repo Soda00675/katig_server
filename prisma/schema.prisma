@@ -56,18 +56,19 @@ model EmergencyTip {
 }
 
 model Boat {
-  id            Int            @id @default(autoincrement())
-  ownerId       Int
-  name          String         @unique
-  operatorName  String
-  capacity      Int
-  type          String
-  status        String
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  owner         User           @relation(references: [id], fields: [ownerId], onDelete: Cascade) // BelongsTo User (as owner)
-  boatSchedules BoatSchedule[] // HasMany BoatSchedules
-  boatBookings  BoatBooking[]
+  id           Int           @id @default(autoincrement())
+  ownerId      Int
+  name         String        @unique
+  operatorName String
+  capacity     Int
+  type         String // Liner / Tourist
+  status       String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  owner        User          @relation(references: [id], fields: [ownerId], onDelete: Cascade) // BelongsTo User (as owner)
+  boatTrips    BoatTrip[] // HasMany BoatTrips
+  boatBookings BoatBooking[]
+  Payment      Payment[]
 }
 
 model BoatBooking {
@@ -85,21 +86,24 @@ model BoatBooking {
   boat               Boat     @relation(references: [id], fields: [boatId], onDelete: Cascade) // BelongsTo Boat
 }
 
-model BoatSchedule {
-  id        Int      @id @default(autoincrement())
-  boatId    Int
-  from      String
-  to        String
-  price     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  boat      Boat     @relation(references: [id], fields: [boatId], onDelete: Cascade) // BelongsTo Boat
+model BoatTrip {
+  id          Int      @id @default(autoincrement())
+  boatId      Int
+  from        String
+  to          String
+  price       String
+  isSchedules Boolean?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  boat        Boat     @relation(references: [id], fields: [boatId], onDelete: Cascade) // BelongsTo Boat
 }
 
 model Payment {
   id        Int      @id @default(autoincrement())
   payerId   Int
+  boatId    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   payer     User     @relation(references: [id], fields: [payerId], onDelete: Cascade) // BelongsTo User (as payer)
+  boat      Boat     @relation(references: [id], fields: [boatId], onDelete: Cascade) // BelongsTo Boat
 }
